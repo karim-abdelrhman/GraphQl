@@ -1,6 +1,5 @@
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
-
 type User {
     id: ID!
     name: String!
@@ -32,7 +31,12 @@ type Query {
 }
 
 type Mutation {
-    PostCreate(title: String!, content: String!, user_id: Int!) : Post
+    createUser(
+        name: String! @rules(apply: ["string"])
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String! @hash @rules(apply: ["min:6"])
+    ) : User! @create
+    createPost(title: String!, content: String!, user_id: Int!) : Post
         @validator(class: "App\\GraphQL\\Validators\\ValidatePostCreate")
         @field(resolver: "App\\GraphQL\\Mutations\\PostCreate")
 }
