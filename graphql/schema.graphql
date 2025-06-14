@@ -24,40 +24,19 @@ type Comment {
     post: Post! @belongsTo
 }
 
-type UserPaginator {
-    paginatorInfo: PaginatorInfo!
-    data: [User!]!
-}
-
-type PaginatorInfo {
-    count: Int!
-    currentPage: Int!
-    firstItem: Int
-    hasMorePages: Boolean!
-    lastItem: Int
-    lastPage: Int!
-    perPage: Int!
-    total: Int!
-}
-
-#type Query{
-#    users : [User!]! @all
-#    userGetById(id: ID! ): User @field(resolver: "App\\GraphQL\\Queries\\UserGetById")
-#    userGetByEmail(email: String!) : User @field(resolver: "App\\GraphQL\\Queries\\UserGetByEmail")
-#}
-
 type Query {
     user(id: ID! @eq) : User @find
-    users: [User!]! @paginate
-    #    posts: [Post!]! @all
-    post(id: Int! @eq): Post @find
+    users(first: Int!, page: Int) : [User!]! @paginate(type: "PAGINATOR", model : "App\\Models\\User")
+    posts(first: Int!page: Int): [Post!]! @paginate(type: "PAGINATOR" ,model: "App\\Models\\Post")
+
 }
 
 type Mutation {
     PostCreate(title: String!, content: String!, user_id: Int!) : Post
+        @validator(class: "App\\GraphQL\\Validators\\ValidatePostCreate")
         @field(resolver: "App\\GraphQL\\Mutations\\PostCreate")
 }
-#@validator(class: "App\\GraphQL\\Validators\\ValidatePostCreate")
+#
 
 #"Account of a person who utilizes this application."
 
