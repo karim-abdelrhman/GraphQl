@@ -4,7 +4,7 @@ namespace App\GraphQL\Validators;
 
 use Nuwave\Lighthouse\Validation\Validator;
 
-final class ValidatePostCreate extends Validator
+final class StoreUserValidator extends Validator
 {
     /**
      * Return the validation rules.
@@ -14,9 +14,9 @@ final class ValidatePostCreate extends Validator
     public function rules(): array
     {
         return [
-            'title' => ['required', 'min:1', 'max:255'],
-            'content' => ['required', 'min:1', 'max:255'],
-            'user_id' => ['required', 'exists:users,id'],
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string' , 'min:8'],
         ];
     }
 }

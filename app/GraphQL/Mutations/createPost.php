@@ -4,7 +4,7 @@ namespace App\GraphQL\Mutations;
 
 use App\Models\Post;
 
-final readonly class PostCreate
+final readonly class createPost
 {
     /** @param  array{}  $args */
     public function __invoke(null $_, array $args)

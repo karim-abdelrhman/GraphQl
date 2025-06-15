@@ -1,0 +1,13 @@
+type Post {
+    id: ID!
+    title: String!
+    content: String!
+    author: User! @belongsTo
+    comments: [Comment!]! @hasMany
+}
+#
+#input createPostInput {
+#    title: String!
+#    content: String!
+#    user_id: Int!
+#}
